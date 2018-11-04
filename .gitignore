@@ -3,6 +3,8 @@ __pycache__/
 .vscode/
 .pytest_cache/
 
+htmlcov/
+coverage.xml
 .coverage
 .env
 

@@ -1,4 +1,4 @@
-from api import db
+from app.api import db
 
 def getById(id):
   res = db.getDebtPoint(id)

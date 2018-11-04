@@ -1,6 +1,6 @@
 from aiohttp import web
 
-from api import service
+from app.api import service
 
 async def getAll(request):
   data = service.getAll()

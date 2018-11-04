@@ -2,7 +2,7 @@ import os
 import logging
 from aiohttp import web
 
-from api import routes
+from app.api import routes
 
 app = web.Application()
 logging.info('Starting up...')
