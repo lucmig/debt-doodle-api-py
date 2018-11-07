@@ -6,4 +6,4 @@ test:
   # - python3 -m venv virtual
   # - source virtual/bin/activate
   - pip3 install -r requirements.txt
-  - python3 -m pytest --cov-report html --cov app/api/
+  - python3 -m pytest --cov app/ --cov-report term --cov-report html
