@@ -5,5 +5,5 @@ test:
   # - pip3 install -U setuptools
   # - python3 -m venv virtual
   # - source virtual/bin/activate
-  - pip install -r requirements.txt
-  - python -m pytest --cov-report html --cov app/api/
+  - pip3 install -r requirements.txt
+  - python3 -m pytest --cov-report html --cov app/api/
