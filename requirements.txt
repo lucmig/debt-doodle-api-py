@@ -78,3 +78,7 @@ xcffib==0.5.1
 xkit==0.0.0
 youtube-dl==2018.10.5
 zope.interface==4.3.2
+pytest=3.8.1
+pytest-mock=1.10.0
+pytest-cov=2.6.0
+pytest-aiohttp=0.3.0
