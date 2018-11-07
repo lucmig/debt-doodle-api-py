@@ -15,6 +15,12 @@ acitvate the virtual env
 source virtual/bin/activate
 ```
 
+deacitvate the virtual env
+
+```sh
+deacitvate
+```
+
 test coverage
 
 ```sh
