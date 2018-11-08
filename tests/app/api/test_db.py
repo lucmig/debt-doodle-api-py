@@ -1,10 +1,6 @@
 import os
 import redis
 
-import mock 
-import pytest
-from pytest_mock import mocker 
-
 from app.api import db
 
 def test_addDebtPoint(mocker):

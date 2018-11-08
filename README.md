@@ -24,5 +24,5 @@ deacitvate
 test coverage
 
 ```sh
-pytest --cov-report html --cov app/api/
+pytest --cov app/ --cov-report term --cov-report html
 ```
