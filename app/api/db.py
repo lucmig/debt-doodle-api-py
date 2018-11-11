@@ -15,7 +15,7 @@ def addDebtPoint(date, name, value):
 def getDebtPoint(id):
   rds = getRedis()
   value = rds.get(id)
-  return unpackResult(id, value)
+  return {} if value is None else unpackResult(id, value)
 
 def getDebtPoints(date):
   rds = getRedis()
@@ -47,5 +47,5 @@ def unpackResult(id, value):
     'id': id,
     'date': id.split(':')[1], 
     'name': id.split(':')[2], 
-    'value': float(value)
+    'value': float(value) 
     }
