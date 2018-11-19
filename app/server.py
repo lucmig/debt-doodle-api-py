@@ -1,10 +1,11 @@
+''' main server '''
 import os
 import logging
 from aiohttp import web
 
-from app.api import routes
+from api import routes
 
-app = web.Application()
+APP = web.Application()
 logging.info('Starting up...')
-routes.init(app)
-web.run_app(app, port=int(os.environ['PORT']), print=logging.info)
+routes.init(APP)
+web.run_app(APP, port=int(os.environ['PORT']), print=logging.info)

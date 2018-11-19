@@ -1,26 +1,27 @@
-from app.api import db
+''' service returning debt data '''
+from . import db
 
-def getById(id):
-  res = db.getDebtPoint(id)
+def get_by_id(key):
+  res = db.get_debt_point(key)
   return res
 
-def getByDate(date):
-  res = db.getDebtPoints(date)
+def get_by_date(date):
+  res = db.get_debt_points(date)
   return res
 
-def getAll():
-  res = db.getAllDebtPoints()
+def get_all():
+  res = db.get_all_debt_points()
   return res
 
 def add(data):
   if isinstance(data, list):
     res = []
     for value in data:
-      res.append(db.addDebtPoint(value['date'], value['name'], value['value']))
+      res.append(db.add_debt_point(value['date'], value['name'], value['value']))
   else:
-    res = db.addDebtPoint(data['date'], data['name'], data['value'])
+    res = db.add_debt_point(data['date'], data['name'], data['value'])
   return res
 
-def delete(id):
-  res = db.deleteDebtPoint(id)
+def delete(key):
+  res = db.delete_debt_point(key)
   return res

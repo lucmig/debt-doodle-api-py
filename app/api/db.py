@@ -1,51 +1,54 @@
+''' interface with redis store '''
 import os
-import logging
-import asyncio
 import redis
 
-def getRedis():
-  return redis.StrictRedis(host=os.environ['REDIS_HOST'], port=int(os.environ['REDIS_PORT']), password=os.environ['REDIS_PASSWORD'], decode_responses=True)
+def get_redis():
+  return redis.StrictRedis(
+    host=os.environ['REDIS_HOST'],
+    port=int(os.environ['REDIS_PORT']),
+    password=os.environ['REDIS_PASSWORD'],
+    decode_responses=True)
 
-def addDebtPoint(date, name, value):
-  rds = getRedis()
+def add_debt_point(date, name, value):
+  rds = get_redis()
   key = 'debt:%s:%s' % (date, name)
   res = rds.set(key, value)
-  return { 'ok': res }
+  return {'ok': res}
 
-def getDebtPoint(id):
-  rds = getRedis()
-  value = rds.get(id)
-  return {} if value is None else unpackResult(id, value)
+def get_debt_point(key):
+  rds = get_redis()
+  value = rds.get(key)
+  return {} if value is None else unpack_result(key, value)
 
-def getDebtPoints(date):
-  rds = getRedis()
+def get_debt_points(date):
+  rds = get_redis()
   search = 'debt:%s:*' % (date)
   keys = rds.keys(search)
-  if len(keys) == 0:
+  if not keys:
     return []
   values = rds.mget(keys)
-  debtPoints = [unpackResult(keys[values.index(dp)], dp) for dp in values]
-  return debtPoints
+  debt_points = [unpack_result(keys[values.index(dp)], dp) for dp in values]
+  return debt_points
 
-def getAllDebtPoints():
-  rds = getRedis()
+def get_all_debt_points():
+  rds = get_redis()
   search = 'debt:*'
   keys = rds.keys(search)
-  if len(keys) == 0:
+  if not keys:
     return []
   values = rds.mget(keys)
-  debtPoints = [unpackResult(keys[values.index(dp)], dp) for dp in values]
-  return debtPoints
+  debt_points = [unpack_result(keys[values.index(dp)], dp) for dp in values]
+  return debt_points
 
-def deleteDebtPoint(id):
-  rds = getRedis()
-  value = rds.delete(id)
-  return unpackResult(id, value)
+def delete_debt_point(key):
+  rds = get_redis()
+  value = rds.delete(key)
+  return unpack_result(key, value)
 
-def unpackResult(id, value):
+def unpack_result(key, value):
   return {
-    'id': id,
-    'date': id.split(':')[1], 
-    'name': id.split(':')[2], 
-    'value': float(value) 
+    'id': key,
+    'date': key.split(':')[1],
+    'name': key.split(':')[2],
+    'value': float(value)
     }

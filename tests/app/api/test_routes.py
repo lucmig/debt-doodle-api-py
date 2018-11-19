@@ -1,34 +1,35 @@
+''' test restful api routes '''
 from aiohttp import web
 
 from app.api import routes, service
 
-async def test_getAll(aiohttp_client, mocker):
+async def test_get_all(aiohttp_client, mocker):
   mock = mocker.MagicMock(return_value=['item1', 'item2'])
-  mocker.patch.object(service, 'getAll', mock)  
+  mocker.patch.object(service, 'get_all', mock)
   app = web.Application()
-  app.router.add_get('/', routes.getAll)
+  app.router.add_get('/', routes.get_all)
   client = await aiohttp_client(app)
   resp = await client.get('/')
   assert resp.status == 200
   json = await resp.json()
   assert ['item1', 'item2'] == json
 
-async def test_getById(aiohttp_client, mocker):
-  mock = mocker.MagicMock(return_value={ 'item': 'item1'})
-  mocker.patch.object(service, 'getById', mock)  
+async def test_get_by_id(aiohttp_client, mocker):
+  mock = mocker.MagicMock(return_value={'item': 'item1'})
+  mocker.patch.object(service, 'get_by_id', mock)
   app = web.Application()
-  app.router.add_get('/{id}', routes.getById)
+  app.router.add_get('/{id}', routes.get_by_id)
   client = await aiohttp_client(app)
   resp = await client.get('/id1')
   assert resp.status == 200
   json = await resp.json()
-  assert { 'item': 'item1' } == json
+  assert {'item': 'item1'} == json
 
-async def test_getByDate(aiohttp_client, mocker):
+async def test_get_by_date(aiohttp_client, mocker):
   mock = mocker.MagicMock(return_value=['item3', 'item4'])
-  mocker.patch.object(service, 'getByDate', mock)  
+  mocker.patch.object(service, 'get_by_date', mock)
   app = web.Application()
-  app.router.add_get('/date/{date}', routes.getByDate)
+  app.router.add_get('/date/{date}', routes.get_by_date)
   client = await aiohttp_client(app)
   resp = await client.get('/date/adate')
   assert resp.status == 200
@@ -36,23 +37,23 @@ async def test_getByDate(aiohttp_client, mocker):
   assert ['item3', 'item4'] == json
 
 async def test_add(aiohttp_client, mocker):
-  mock = mocker.MagicMock(return_value={ 'is': 'ok' })
-  mocker.patch.object(service, 'add', mock)  
+  mock = mocker.MagicMock(return_value={'is': 'ok'})
+  mocker.patch.object(service, 'add', mock)
   app = web.Application()
   app.router.add_post('/', routes.add)
   client = await aiohttp_client(app)
   resp = await client.post('/', json={'value': 'foo'})
   assert resp.status == 200
   json = await resp.json()
-  assert { 'is': 'ok' } == json
+  assert {'is': 'ok'} == json
 
 async def test_delete(aiohttp_client, mocker):
-  mock = mocker.MagicMock(return_value={ 'is': 'ok' })
-  mocker.patch.object(service, 'delete', mock)  
+  mock = mocker.MagicMock(return_value={'is': 'ok'})
+  mocker.patch.object(service, 'delete', mock)
   app = web.Application()
   app.router.add_delete('/{id}', routes.delete)
   client = await aiohttp_client(app)
   resp = await client.delete('/id1')
   assert resp.status == 200
   json = await resp.json()
-  assert { 'is': 'ok' } == json
+  assert {'is': 'ok'} == json

@@ -1,19 +1,21 @@
+''' restful api routes '''
 from aiohttp import web
 
-from app.api import service
+from . import service
 
-async def getAll(request):
-  data = service.getAll()
+#pylint: disable=W0613
+async def get_all(request):
+  data = service.get_all()
   return web.json_response(data)
 
-async def getById(request):
-  id = request.match_info.get('id')
-  data = service.getById(id)
+async def get_by_id(request):
+  key = request.match_info.get('id')
+  data = service.get_by_id(key)
   return web.json_response(data)
 
-async def getByDate(request):
+async def get_by_date(request):
   date = request.match_info.get('date')
-  data = service.getByDate(date)
+  data = service.get_by_date(date)
   return web.json_response(data)
 
 async def add(request):
@@ -22,15 +24,15 @@ async def add(request):
   return web.json_response(res)
 
 async def delete(request):
-  id = request.match_info.get('id')
-  data = service.delete(id)
+  key = request.match_info.get('id')
+  data = service.delete(key)
   return web.json_response(data)
 
 def init(app):
   app.add_routes([
-    web.get('/', getAll),
-    web.get('/{id}', getById),
-    web.get('/date/{date}', getByDate),
+    web.get('/', get_all),
+    web.get('/{id}', get_by_id),
+    web.get('/date/{date}', get_by_date),
     web.post('/', add),
     web.delete('/{id}', delete)
-    ])
+  ])

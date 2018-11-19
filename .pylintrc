@@ -1,0 +1,7 @@
+[BASIC]
+required-attributes=
+no-docstring-rgx=
+
+[FORMAT]
+indent-string='  '
+indent-after-paren=2
