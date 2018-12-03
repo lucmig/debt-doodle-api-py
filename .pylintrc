@@ -1,3 +1,6 @@
+[MASTER]
+init-hook='import sys; sys.path.append("/home/lucmig/dev/debt-doodle-api/tests/app")'
+
 [BASIC]
 required-attributes=
 no-docstring-rgx=
