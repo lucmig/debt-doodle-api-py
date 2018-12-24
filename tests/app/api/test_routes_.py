@@ -25,6 +25,17 @@ async def test_get_by_id(aiohttp_client, mocker):
   json = await resp.json()
   assert {'item': 'item1'} == json
 
+async def test_get_point(aiohttp_client, mocker):
+  mock = mocker.MagicMock(return_value={'item': 'item1'})
+  mocker.patch.object(service, 'get_by_id_date', mock)
+  app = web.Application()
+  app.router.add_get('/{id}/{date}', routes.get_point)
+  client = await aiohttp_client(app)
+  resp = await client.get('/id1/date1')
+  assert resp.status == 200
+  json = await resp.json()
+  assert {'item': 'item1'} == json
+
 async def test_get_by_date(aiohttp_client, mocker):
   mock = mocker.MagicMock(return_value=['item3', 'item4'])
   mocker.patch.object(service, 'get_by_date', mock)

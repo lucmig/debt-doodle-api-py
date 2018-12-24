@@ -13,6 +13,12 @@ async def get_by_id(request):
   data = service.get_by_id(key)
   return web.json_response(data)
 
+async def get_point(request):
+  key = request.match_info.get('id')
+  date = request.match_info.get('date')
+  data = service.get_by_id_date(key, date)
+  return web.json_response(data)
+
 async def get_by_date(request):
   date = request.match_info.get('date')
   data = service.get_by_date(date)
@@ -31,8 +37,9 @@ async def delete(request):
 def init(app):
   app.add_routes([
     web.get('/', get_all),
-    web.get('/{id}', get_by_id),
     web.get('/date/{date}', get_by_date),
+    web.get('/{id}', get_by_id),
+    web.get('/{id}/{date}', get_point),
     web.post('/', add),
     web.delete('/{id}', delete)
   ])
